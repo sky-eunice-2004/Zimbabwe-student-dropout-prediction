@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dropout Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #af69b1ff, #3e034dff);
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 350px;
+            margin: auto;
+            box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        button {
+            background: #360a35ff;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #574554ff;
+        }
+
+        .clear-btn {
+            background: #bbb;
+            color: black;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>🎓 Student Dropout Prediction</h2>
+
+    <form action="/predict" method="post">
+
+        <!-- INPUTS WITH VALIDATION -->
+        <input type="number" name="age" placeholder="Enter Age (15–60)" min="15" max="60" required>
+
+        <input type="number" name="attendance_rate" placeholder="Attendance (%) 0–100" min="0" max="100" required>
+
+        <input type="number" name="study_hours" placeholder="Study Hours (0–24)" min="0" max="24" step="0.1" required>
+
+        <input type="number" name="stress_level" placeholder="Stress Level (0–10)" min="0" max="10" required>
+
+        <button type="submit">Predict</button>
+        <button type="button" id="clear-btn" class="clear-btn">Clear</button>
+
+    </form>
+
+    <!-- RESULT DISPLAY -->
+    <div class="result">
+        {{ prediction_text }}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        const resultDiv = document.querySelector('.result');
+        const clearBtn = document.getElementById('clear-btn');
+
+        function clearEverything() {
+            if (resultDiv) resultDiv.textContent = '';
+            if (form) form.reset();
+        }
+
+        // Auto-clear result after 4 seconds
+        if (resultDiv && resultDiv.textContent.trim()) {
+            setTimeout(clearEverything, 4000);
+        }
+
+        // Manual clear button
+        if (clearBtn) {
+            clearBtn.addEventListener('click', clearEverything);
+        }
+    });
+</script>
+
+</body>
+</html>
